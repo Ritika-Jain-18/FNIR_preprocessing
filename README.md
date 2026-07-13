@@ -35,7 +35,7 @@ The dataset used for this project is publicly available.
 
 Dataset Link:
 
-(https://www.kaggle.com/datasets/aysenureser/fnirs-data-and-analysis-scripts)
+https://www.kaggle.com/datasets/aysenureser/fnirs-data-and-analysis-scripts
 
 The dataset is **not included** in this repository.
 
@@ -144,7 +144,13 @@ For every subject and every experimental condition, the pipeline generates:
 - Time-course topographic maps
 
 ---
+## Generated Outputs
 
+The generated output figures (~36 MB compressed) are available here:
+
+https://drive.google.com/file/d/1bbBCNqy4pdRCDk1W_o3IOQI1TcnuiH2u/view
+
+---
 ## Notes
 
 - Subjects 6 and 9 were not present in the provided dataset.
