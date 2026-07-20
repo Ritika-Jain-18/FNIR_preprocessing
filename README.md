@@ -4,13 +4,19 @@
 
 This repository contains a complete preprocessing, visualization, and automated reporting pipeline for an fNIRS emotion recognition dataset using **Python** and **MNE-Python**.
 
-The pipeline processes every available subject, performs standard fNIRS preprocessing, extracts task-related haemodynamic responses, generates cortical activation maps, computes activation statistics, and automatically creates a comprehensive Microsoft Word report summarizing the results.
+The project includes two preprocessing pipelines:
+
+- **Original Pipeline (`batch_process.py`)**
+  - Generates **Before**, **After**, and **Difference** activation maps together with HbO/HbR time-course visualizations.
+
+- **Enhanced Pipeline (`processing.py`)**
+  - Generates **Before**, **During**, and **After** activation maps together with HbO/HbR time-course visualizations, computes activation statistics, and automatically generates a comprehensive Microsoft Word report.
 
 ---
 
-## Features
+# Features
 
-The pipeline performs the following steps:
+## Original Processing Pipeline (`batch_process.py`)
 
 - Load SNIRF recordings
 - Optical Density conversion
@@ -21,30 +27,62 @@ The pipeline performs the following steps:
 - Duplicate event removal
 - Epoch creation
 - Evoked response computation
-- HbO/HbR signal separation
-- Automatic generation of:
-  - Before (-2 to 0 s) activation maps
-  - During (0 to 5 s) activation maps
-  - After (5 to 10 s) activation maps
-- Trial summary generation
-- Mean activation summary generation
-- Automatic Word report generation for all processed subjects
+- HbO/HbR separation
+- Before activation maps
+- After activation maps
+- Difference (After − Before) activation maps
+- HbO/HbR time-course topographic maps
 
 ---
 
-## Repository Structure
+## Enhanced Processing Pipeline (`processing.py`)
 
-```
+Includes all preprocessing steps above and additionally generates:
+
+- Before (-2 to 0 s) activation maps
+- During (0 to 5 s) activation maps
+- After (5 to 10 s) activation maps
+- HbO/HbR time-course topographic maps
+- Trial Summary tables
+- Activation Summary tables
+- Outputs compatible with automatic report generation
+
+---
+
+## Report Generation (`generate_report.py`)
+
+Automatically generates a structured Microsoft Word report containing:
+
+- Subject-wise results
+- HbO activation maps
+- HbR activation maps
+- Before, During and After activation maps
+- Trial Summary tables
+- Activation Summary tables
+- Overall processing summary
+
+---
+
+# Repository Structure
+
+```text
 FNIR_preprocessing/
 
 ├── processing.py
-│      Core preprocessing and visualization pipeline
+│      Enhanced preprocessing pipeline
+│      • Before / During / After activation maps
+│      • HbO/HbR time-course maps
+│      • Trial Summary
+│      • Activation Summary
 │
 ├── batch_process.py
-│      Batch processing script for all available subjects
+│      Original preprocessing pipeline
+│      • Before / After / Difference maps
+│      • HbO/HbR time-course maps
 │
 ├── generate_report.py
 │      Automatically generates the final Word report
+│      from the outputs produced by processing.py
 │
 ├── fNIRS_Assignment_Report.docx
 │      Example generated report
@@ -54,23 +92,23 @@ FNIR_preprocessing/
 
 ---
 
-## Dataset
+# Dataset
 
 The dataset used for this project is publicly available.
 
-**Dataset Link**
+**Dataset**
 
 https://www.kaggle.com/datasets/aysenureser/fnirs-data-and-analysis-scripts
 
 The dataset is **not included** in this repository.
 
-After downloading the dataset, update the dataset directory inside **processing.py** or **batch_process.py** if required.
+After downloading the dataset, update the dataset path inside the processing script before execution.
 
 ---
 
-## Processing Pipeline
+# Processing Pipeline
 
-```
+```text
 Raw SNIRF Recording
         │
         ▼
@@ -101,7 +139,8 @@ Evoked Response Computation
 HbO / HbR Separation
         │
         ▼
-Before / During / After Activation Maps
+Before / During / After
+Activation Maps
         │
         ▼
 Activation Statistics
@@ -112,29 +151,27 @@ Automatic Word Report Generation
 
 ---
 
-## Output Structure
+# Output Structure
 
-```
+```text
 outputs/
 
 ├── data_figures/
 │
-│   ├── Subject-1/
-│   │
+├── Subject-1/
 │   ├── Condition_1/
-│   │      ├── HbO_Before.png
-│   │      ├── HbO_During.png
-│   │      ├── HbO_After.png
-│   │      ├── HbR_Before.png
-│   │      ├── HbR_During.png
-│   │      └── HbR_After.png
+│   │   ├── HbO_Before.png
+│   │   ├── HbO_During.png
+│   │   ├── HbO_After.png
+│   │   ├── HbR_Before.png
+│   │   ├── HbR_During.png
+│   │   ├── HbR_After.png
+│   │   ├── Trial Summary
+│   │   └── Activation Summary
 │   │
 │   ├── Condition_2/
 │   ├── Condition_4/
-│   ├── Condition_6/
-│   │
-│   ├── trial_summary.csv
-│   └── activation_summary.csv
+│   └── Condition_6/
 │
 ├── Subject-2/
 ├── ...
@@ -144,7 +181,7 @@ outputs/
 
 ---
 
-## Generated Report
+# Generated Report
 
 The automatically generated report includes:
 
@@ -152,20 +189,20 @@ The automatically generated report includes:
 - HbO activation maps
 - HbR activation maps
 - Before, During and After activation maps
-- All annotated experimental conditions (1, 2, 4 and 6)
+- Four annotated experimental conditions (1, 2, 4 and 6)
 - Trial Summary tables
 - Activation Summary tables
-- Overall processing summary
+- Overall report summary
 
 ---
 
-## Requirements
+# Requirements
 
 Python **3.10+**
 
 Main libraries:
 
-```
+```text
 numpy
 pandas
 matplotlib
@@ -181,31 +218,59 @@ pip install numpy pandas matplotlib mne python-docx
 
 ---
 
-## Running the Pipeline
+# Running the Pipeline
 
-### Process all subjects
+## Original Pipeline
+
+Generate:
+
+- Before activation maps
+- After activation maps
+- Difference maps
+- HbO/HbR time-course maps
 
 ```bash
 python batch_process.py
 ```
 
-### Generate the final report
+---
+
+## Enhanced Pipeline
+
+Generate:
+
+- Before activation maps
+- During activation maps
+- After activation maps
+- HbO/HbR time-course maps
+- Trial Summary tables
+- Activation Summary tables
+
+```bash
+python processing.py
+```
+
+---
+
+## Generate the Report
+
+After running `processing.py`:
 
 ```bash
 python generate_report.py
 ```
 
-The report will be generated as:
+The report will be saved as:
 
-```
+```text
 outputs/fNIRS_Assignment_Report.docx
 ```
 
 ---
 
-## Example Outputs
+# Example Outputs
 
-An example report is included in this repository:
+The repository includes an example report:
 
 - **fNIRS_Assignment_Report.docx**
 
@@ -217,17 +282,17 @@ https://drive.google.com/file/d/1wKekIGkBKjFKwzZhlwfN8stF6SKi7ViS/view?usp=drive
 
 ---
 
-## Notes
+# Notes
 
 - Subjects **6** and **9** were not present in the provided dataset.
-- The pipeline automatically processes every available subject.
+- The pipeline automatically detects and processes every available subject.
 - Duplicate event annotations are removed before epoch creation.
-- Trial counts and average haemodynamic activation values are automatically computed.
+- Trial counts and average haemodynamic responses are automatically summarized.
 - Some recordings exhibit minimal haemodynamic activity due to signal quality, resulting in nearly uniform activation maps.
 
 ---
 
-## Author
+# Author
 
 **Ritika Jain**
 
