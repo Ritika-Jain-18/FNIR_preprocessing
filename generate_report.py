@@ -11,11 +11,11 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 # ============================================================
 
 ROOT_DIR = Path(
-    r"D:\nirvesh\outputs\data_figures"
+    r"\outputs\data_figures"
 )
 
 OUTPUT_DOC = Path(
-    r"D:\nirvesh\outputs\fNIRS_Assignment_Report.docx"
+    r"\outputs\fNIRS_Assignment_Report.docx"
 )
 
 # ============================================================
